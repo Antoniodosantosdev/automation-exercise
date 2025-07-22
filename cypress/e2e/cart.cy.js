@@ -21,6 +21,7 @@ describe("Carrinho de compras", () => {
         .and("contain.text", "Cart is empty!");
     });
   });
+  
   context("Quando o usuário finaliza uma compra", () => {
     it("Deve validar e exibir os dados na finalização da compra", () => {
       cy.visit("/login");

@@ -16,6 +16,8 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+
+
 import { faker } from "@faker-js/faker";
 
 Cypress.gerador = faker 
