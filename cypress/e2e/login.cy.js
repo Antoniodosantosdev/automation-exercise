@@ -1,6 +1,6 @@
 
 
-describe("Cadastro do Usuário ou Login", () => {
+describe("Cadastro do Usuário e Login", () => {
   context("Quando o usuário acessa a página de login", () => {
     beforeEach(() => {
       cy.visit("/login");
