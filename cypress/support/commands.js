@@ -11,7 +11,7 @@
 //
 // -- This is a parent command --
 
-//TESTE DE LOGIN
+//CENÁRIO DE CADASTRO E LOGIN
 
 // LOGIN COM SUCESSO
 Cypress.Commands.add("fazerLogin", (email, password) => {
@@ -49,7 +49,9 @@ Cypress.Commands.add("loginSenhaIncorreta", (email, passwordIncorreto) => {
 });
 
 // LOGIN COM USUÁRIO NÃO CADASTRADO
-Cypress.Commands.add("loginNaoCadastrado",(emailAleatorio, passwordAleatorio) => {
+Cypress.Commands.add(
+  "loginNaoCadastrado",
+  (emailAleatorio, passwordAleatorio) => {
     cy.visit("/login");
     cy.get('[data-qa="login-email"]').type(emailAleatorio);
     cy.get('[data-qa="login-password"]').type(passwordAleatorio);
@@ -87,7 +89,7 @@ Cypress.Commands.add("loginEmailInvalido", (emailInvalido, password) => {
   cy.get('[data-qa="login-button"]').click();
 });
 
-// TESTE CONTACT US
+// CENÁRIO CONTACT US
 
 // ENVIO DE FORMULÁRIO DE CONTATO COM DADOS VÁLIDOS
 Cypress.Commands.add("FormularioValido",(nameContact, emailContact, subject, message) => {
@@ -121,18 +123,153 @@ Cypress.Commands.add("FormularioInvalido",(nameContact, invalidEmail, subject, m
 
 //ENVIO DE FORMULÁRIO COM CAMPO DE EMAIL VÁZIO
 Cypress.Commands.add("enviarFormularioEmailVazio",(nameContact, subject, message) => {
-      cy.get("[data-qa=name]").type(nameContact);
-      cy.get("[data-qa=email]").should("have.value", "");
-      cy.get("[data-qa=subject]").type(subject);
-      cy.get("[data-qa=message]").type(message);
+    cy.get("[data-qa=name]").type(nameContact);
+    cy.get("[data-qa=email]").should("have.value", "");
+    cy.get("[data-qa=subject]").type(subject);
+    cy.get("[data-qa=message]").type(message);
 
-      cy.get("[data-qa=submit-button]").click();
-      cy.wait(4000);
-      cy.get("[data-qa=email]")
-        .should("have.prop", "validationMessage")
-        .and("not.be.empty");
+    cy.get("[data-qa=submit-button]").click();
+    cy.wait(4000);
+    cy.get("[data-qa=email]")
+      .should("have.prop", "validationMessage")
+      .and("not.be.empty");
   }
 );
+
+// CENÁRIO DE PRODUCT
+
+// Pesquisa um produto específico pelo nome
+Cypress.Commands.add("pesquisarProduto", (product) => {
+  cy.get("#search_product").type(product.name);
+  cy.get("#submit_search").click();
+  cy.get(".productinfo").should("contain", product.name);
+});
+
+// Adicionar um produto ao carrinho
+Cypress.Commands.add("adicionarProdutoAoCarrinho", (product) => {
+  cy.contains(".productinfo", product.name)
+    .parents(".product-image-wrapper")
+    .trigger("mouseover");
+
+  cy.contains(".productinfo", product.name)
+    .parents(".product-image-wrapper")
+    .contains("Add to cart")
+    .click();
+
+  cy.contains("Continue Shopping").should("be.visible");
+  cy.contains("View Cart").click();
+
+  cy.get(".cart_description").should("contain", product.name);
+});
+
+// Pesquisa de produto usando o botão de pesquisa
+
+Cypress.Commands.add("pesquisarProdutoComBotao", (product) => {
+  cy.get("#search_product").type(product.name);
+  cy.get("#submit_search").click();
+  cy.get(".productinfo").should("contain", product.name);
+});
+
+// CENÁRIO DE CARRINHO DE COMPRAS
+
+// Quando um produto é removido do carrinho
+
+Cypress.Commands.add("removerPrimeiroProdutoCarrinho", () => {
+  cy.get(".product-image-wrapper .add-to-cart").first().click();
+
+  cy.contains("Continue Shopping").should("be.visible");
+  cy.contains("View Cart").click();
+
+  cy.get("tr[id^='product-']").should("have.length", 1);
+
+  cy.get(".cart_quantity_delete").first().click();
+
+  cy.get("#empty_cart")
+    .should("be.visible")
+    .and("contain.text", "Cart is empty!");
+});
+
+// Quando o usuário finaliza uma compra
+
+Cypress.Commands.add("finalizarCompraValidacao", (email, password, product) => {
+  cy.visit("/login");
+
+  cy.get('[data-qa="login-email"]').type(email);
+  cy.get('[data-qa="login-password"]').type(password);
+  cy.get('[data-qa="login-button"]').click();
+
+  cy.visit("/products");
+
+  cy.contains(".productinfo", product.name).click();
+
+  cy.visit("/product_details/1");
+
+  cy.get("#quantity").clear().type("1");
+  cy.get(".cart").click();
+
+  cy.contains("Continue Shopping").should("be.visible");
+  cy.contains("View Cart").click();
+
+  cy.contains("Proceed To Checkout").click();
+
+  cy.get("#address_delivery .address_firstname").should("not.be.empty");
+
+  cy.get("#product-1 .cart_quantity button")
+    .invoke("text")
+    .then((text) => {
+      const qtd = parseInt(text.trim(), 10);
+      expect(qtd).to.be.a("number");
+      expect(qtd).to.be.greaterThan(0);
+    });
+
+  cy.get("#product-1 .cart_description a").should("have.text", product.name);
+
+  cy.get("#product-1 .cart_price")
+    .invoke("text")
+    .then((text) => {
+      const cleanedText = text.trim().replace(/\s+/g, " ");
+      expect(cleanedText).to.include("Rs. 500");
+    });
+});
+
+// Finalização de compra e download da fatura
+
+Cypress.Commands.add("realizarCompraComFatura", (email, password, product, randomName, cardNumber, cvc, fullYear, month) => {
+  
+  cy.visit("/login");
+  cy.get('[data-qa="login-email"]').type(email);
+  cy.get('[data-qa="login-password"]').type(password);
+  cy.get('[data-qa="login-button"]').click();
+
+  cy.visit("/products")
+  console.log("Produto recebido:", product);
+  cy.contains(".productinfo", product.name).click();
+
+  cy.visit("/product_details/1")
+  cy.get("#quantity").clear().type("1");
+  cy.get(".cart").click();
+
+  cy.contains("Continue Shopping").should("be.visible");
+  cy.contains("View Cart").click();
+
+  cy.contains("Proceed To Checkout").click();
+  cy.get('[name="message"]').type("Pedido automatizado");
+
+  cy.contains("Place Order").click();
+
+  cy.get('[data-qa="name-on-card"]').type(randomName);
+  cy.get('[data-qa="card-number"]').type(cardNumber);
+  cy.get('[data-qa="cvc"]').type(cvc);
+  cy.get('[data-qa="expiry-month"]').type(month);
+  cy.get('[data-qa="expiry-year"]').type(fullYear);
+  cy.get('[data-qa="pay-button"]').click();
+
+  cy.contains("Congratulations! Your order has been confirmed!").should("be.visible");
+
+  cy.contains("Download Invoice").should("be.visible").click();
+});
+
+
 //
 // -- This is a child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
