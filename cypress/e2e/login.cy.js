@@ -1,3 +1,4 @@
+
 describe("Cadastro do Usuário e Login", () => {
   const fullName = Cypress.gerador.person.fullName();
   const emailAleatorio = Cypress.gerador.internet.email();
@@ -33,7 +34,7 @@ describe("Cadastro do Usuário e Login", () => {
     it("Deve exibir uma mensagem de erro ao tentar logar com senha inválida", () => {
       const email = "maverick3@gmail.com";
       const passwordIncorreto = "senha_incorreta";
-
+      
       cy.loginSenhaIncorreta(email, passwordIncorreto);
     });
   });
@@ -68,10 +69,7 @@ describe("Cadastro do Usuário e Login", () => {
     it("Deve permitir login com credenciais válidas", () => {
       const email = "maverick3@gmail.com";
       const password = "teste@123";
-
-      cy.loginComSucesso(email, password);
-
-      // Verificações pós-login
+      cy.fazerLogin(email, password);
     });
   });
 

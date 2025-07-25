@@ -1,9 +1,12 @@
 {
   "blueTop": {
+    "id": 1,
     "name": "Blue Top",
     "price": "Rs. 500"
   },
   "winterTop": {
-    "name": "Winter Top"
+    "id": 5,
+    "name": "Winter Top",
+    "price": "Rs. 400"
   }
 }

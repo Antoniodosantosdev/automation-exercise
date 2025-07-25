@@ -1,4 +1,4 @@
-// products.cy.js
+
 describe("Products", () => {
   beforeEach(() => {
     cy.visit("/products");
@@ -6,7 +6,7 @@ describe("Products", () => {
   
 
   context("Pesquisar um produto especifico", () => {
-    it("Deve pesquisar por um produto especifico", () => {
+    it("Deve encontrar o produto 'Blue Top' ao pesquisar por nome", () => {
       cy.fixture("productData").then((data) => {
         cy.pesquisarProduto(data.blueTop);
       });
@@ -25,7 +25,7 @@ describe("Products", () => {
     it("Deve pesquisar um produto usando o botão de pesquisa", () => {
 
       cy.fixture("productData").then((data) => {
-        cy.pesquisarProdutoComBotao(data.winterTop );
+        cy.pesquisarProduto(data.winterTop );
         
       });
     });

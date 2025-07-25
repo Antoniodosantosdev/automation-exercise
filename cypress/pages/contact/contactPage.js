@@ -1,4 +1,4 @@
-import { contactElements } from "./contactElements";
+import contactElements from "./contactElements";
 
 class contactPage {
   acessarContact() {
@@ -6,37 +6,32 @@ class contactPage {
   }
 
   preencherNome(name) {
-    cy.get(contactElements.nameContact).type(name);
+    cy.get(contactElements.nameInput).type(name);
   }
 
   preencherEmail(email) {
     cy.get(contactElements.emailContact).type(email);
   }
 
-  verificarCampoEmailVazio() {
-    cy.get(contactElements.emailInput).should("have.prop", "validationMessage").and("not.be.empty");
+  verificarValidacaoHTML5() {
+    cy.get(contactElements.emailContact).should("have.prop", "validationMessage").and("not.be.empty");
   }
 
   preencherAssunto(subject) {
-    cy.get(contactElements.subjectContact).type(subject);
+    cy.get(contactElements.subjectInput).type(subject);
   }
 
   preencherMensagem(message) {
-    cy.get(contactElements.contactMessage).type(message);
+    cy.get(contactElements.messageTextarea).type(message);
   }
 
   clicarBotaoSubmit() {
-    cy.get(contactElements.contactValid).click();
+    cy.get(contactElements.submitButton).click();
   }
 
   validarMensagem() {
     cy.contains(contactElements.successContact).should("be.visible");
   }
-
-  mensagemInvalida() {
-    cy.get(contactElements.emailContact).should("be.visible")
-  }
-
 }
 
 export default new contactPage();

@@ -28,11 +28,13 @@ describe("Checkout de compras", () => {
           email,
           password,
           data.winterTop,
-          randomName,
-          cardNumber,
-          cvc,
-          fullYear,
-          month
+          {
+            randomName,
+            cardNumber,
+            cvc,
+            month,
+            fullYear,
+          }
         );
       });
     });

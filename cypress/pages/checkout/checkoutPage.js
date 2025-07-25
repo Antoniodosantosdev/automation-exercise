@@ -1,10 +1,6 @@
 import checkoutElements from "./checkoutElements";
 
 class checkoutPage {
-  acessarLogin() {
-    cy.visit("/login");
-  }
-
   preencherEmail(email) {
     cy.get(checkoutElements.inputEmail).type(email);
   }

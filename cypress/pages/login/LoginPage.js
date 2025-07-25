@@ -1,5 +1,6 @@
 import { loginElements } from "./loginElements";
 
+
 class loginPage {
   acessarLogin() {
     cy.visit("/login");
