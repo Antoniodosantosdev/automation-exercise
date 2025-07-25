@@ -1,14 +1,15 @@
+
 # 🧪 Automation Exercise - Testes Automatizados
 
 Este repositório contém o plano de testes automatizados para o site [Automation Exercise](https://automationexercise.com), com foco em validação funcional da interface do usuário (UI). O objetivo é garantir a qualidade dos principais fluxos de navegação por meio de scripts de testes estáveis e reutilizáveis.
 ## Repositório
 # Criação de testes e2e para Demoday do curso de Quality assurance da Escola Atlântico Avanti.
-## 🎯 Objetivos
+##  Objetivos
 
 - Automatizar testes funcionais em cenários críticos da aplicação
 - Reduzir o retrabalho com testes repetitivos
 
-## 🧰 Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 - **Linguagem:** JavaScript  
 - **Framework:** [Cypress](https://www.cypress.io)
@@ -16,7 +17,7 @@ Este repositório contém o plano de testes automatizados para o site [Automatio
  
 
 
-## 🧪 Funcionalidades Testadas
+##  Funcionalidades Testadas
 
 - Cadastro de novo usuário  
 - Login e logout  
@@ -26,7 +27,7 @@ Este repositório contém o plano de testes automatizados para o site [Automatio
 - Contato via formulário  
 
 
-##  👤 Autor  
+##   Autor  
 - QAvengers
 
 ## Instale as dependências:
@@ -34,7 +35,7 @@ Este repositório contém o plano de testes automatizados para o site [Automatio
 npm install
 
 
-## 🚀 Como executar os testes
+##  Como executar os testes
 
 ```bash
 # 1. Executar em modo interativo
@@ -44,7 +45,7 @@ npx cypress open para executar IDE
 npx cypress run para rodar em modo Headless
 
 
-#  📁 Estrutura do Projeto
+#   Estrutura do Projeto
 
 
 ├── cypress/
