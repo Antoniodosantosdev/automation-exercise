@@ -30,6 +30,10 @@ Este repositório contém o plano de testes automatizados para o site [Automatio
 ##   Autor  
 - QAvengers
 
+##   Links 
+[Acesse o site do Automation Exercise](https://automationexercise.com)
+
+
 ## Instale as dependências:
 ```bash
 npm install
