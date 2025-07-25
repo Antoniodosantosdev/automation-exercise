@@ -32,6 +32,7 @@ Este repositório contém o plano de testes automatizados para o site [Automatio
 
 ##   Links 
 [Acesse o site do Automation Exercise](https://automationexercise.com)
+[Acesse o Slide](https://4354165463.my.canva.site/automation-exercise)
 
 
 ## Instale as dependências:
